@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<form action="" method="post" autocomplete="off">
+    {% csrf_token %}
+
+    {% for field in form %}
+        {{ field|as_crispy_field }}
+    {% endfor %}
+
+    <div class="row">
+        <div class="col-md-8">
+            <button class="btn btn-success btn-block btn-lg"> <i class="fas fa-database "></i> Submit </button>
+        </div>
+        <div class="col-md-4">
+            <a href="{% url model_name|add:'_list' %}" class="btn btn-outline-success btn-block btn-lg"> <i class="fas fa-backward"></i> Back</a>
+        </div>
+    </div>
+    
+</form>
+{% endblock content %}

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<a href="{% url model_name|add:'_new' %}" class="btn btn-success btn-block"> <i class="fas fa-plus"></i> Insert</a>
+<table class="table table-borderless">
+    {% if object_list %}
+    <thead class="border-bottom font-weight-bold">
+        <tr>
+            {% for name, value in object_list.0.get_fields %}
+                <th scope="col">{{ name }}</th>
+            {% endfor %}
+            <td>Edit</td>
+            <td>Delete</td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for object in object_list %}
+           <tr>
+               {% for name, value in object.get_fields %}
+                        <td>{{ value }}</td>
+               {% endfor %}
+               <td><a href="{% url model_name|add:'_edit' object.pk %}" class="btn btn-secondary"> <i class="fas fa-edit"></i> Edit</a></td>
+               <td>
+                   <form action="{% url model_name|add:'_delete' object.pk %}" method="post">
+                       {% csrf_token %}
+                       <button class="btn btn-danger"> <i class="fas fa-trash"></i> Delete</button>
+                   </form>
+                </td>
+           </tr>
+        {% endfor %}
+    {% endif %}
+    </tbody>
+</table>
+{% endblock content %}
